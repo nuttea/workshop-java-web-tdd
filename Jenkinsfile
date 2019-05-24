@@ -10,15 +10,10 @@ pipeline {
         git 'https://github.com/nuttea/workshop-java-web-tdd.git'
       }
     }
-    stage('Build') {
+    stage('Test and Build') {
       steps {
         sh "mvn clean package"
         junit 'target/surefire-reports/*.xml'
-      }
-    }
-    stage('Deploy to Tomcat') {
-      steps { 
-        build 'deploy_pipeline'
       }
     }
     stage('Code coverage') {
@@ -31,9 +26,18 @@ pipeline {
         sh 'mvn sonar:sonar'
       }
     }
-    stage('UI-Test') {
+    stage('Deploy to Tomcat') {
       steps { 
-        sh "robot atdd/*.robot"
+        build 'deploy_pipeline'
+      }
+    }
+    stage('UI-Test') {
+      parallel chrome: { 
+        sh "robot -v BROWSER:chrome atdd/*.robot"
+        step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
+      },
+      firefox: {
+        sh "robot -v BROWSER:ff -T atdd/*.robot"
         step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
       }
     }
