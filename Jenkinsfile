@@ -34,21 +34,21 @@ pipeline {
     stage('UI Test') {
       steps {
         parallel Chrome: { 
-        stage('Chrome') {
-          steps {
-            sh "robot -v BROWSER:chrome atdd/*.robot"
-            step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
+          stage('Chrome') {
+            steps {
+              sh "robot -v BROWSER:chrome atdd/*.robot"
+              step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
+            }
+          }
+        },
+        Firefox: {
+          stage('Firefox') {
+            steps {
+              sh "robot -v BROWSER:ff -T atdd/*.robot"
+              step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
+            }
           }
         }
-      },
-      Firefox: {
-        stage('Firefox') {
-          steps {
-            sh "robot -v BROWSER:ff -T atdd/*.robot"
-            step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
-          }
-        }
-      }
       }
     }
   }
