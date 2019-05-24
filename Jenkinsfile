@@ -31,8 +31,9 @@ pipeline {
         build 'deploy_pipeline'
       }
     }
-    stage('UI-Test') {
-      parallel Chrome: { 
+    stage('UI Test') {
+      steps {
+        parallel Chrome: { 
         stage('Chrome') {
           steps {
             sh "robot -v BROWSER:chrome atdd/*.robot"
@@ -47,6 +48,7 @@ pipeline {
             step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
           }
         }
+      }
       }
     }
   }
