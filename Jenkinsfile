@@ -32,7 +32,7 @@ pipeline {
       }
     }
     stage('UI-Test') {
-      parallel chrome: { 
+      parallel Chrome: { 
         stage('Chrome') {
           steps {
             sh "robot -v BROWSER:chrome atdd/*.robot"
@@ -40,7 +40,7 @@ pipeline {
           }
         }
       },
-      firefox: {
+      Firefox: {
         stage('Firefox') {
           steps {
             sh "robot -v BROWSER:ff -T atdd/*.robot"
