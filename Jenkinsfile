@@ -1,5 +1,9 @@
 pipeline {
      agent any
+     environment {
+         PATH = "/Users/njiratti/Documents/course-ci-cd-with-jenkins-master/apache-maven-3.6.0/bin:${env.PATH}"
+         JAVA_HOME = "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/"
+     }
      stages {
        stage('Pullcode') {
          steps {
@@ -23,14 +27,14 @@ pipeline {
           }
         }
         stage('SonarQube analysis') {
-          withSonarQubeEnv('My SonarQube Server') {
+          steps {
             // requires SonarQube Scanner for Maven 3.2+
             sh 'mvn sonar:sonar'
           }
         }
         stage('UI-Test') {
           steps { 
-            sh "robot *.robot"
+            sh "robot atdd/*.robot"
           }
         }
       }
