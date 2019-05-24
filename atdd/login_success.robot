@@ -19,7 +19,7 @@ Login success
 login ด้วยผู้ใช้งานชื่อ somkiat
     Input Text   id=user  somkiat
     Input Text   id=pin  12345678789
-    Take Screenshot /tmp/mypic
+    Capture page screenshot  ${TEST NAME}.png
     Click Button   Login
 
 เข้ามาหน้า login
