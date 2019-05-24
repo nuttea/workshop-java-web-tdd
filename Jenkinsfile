@@ -7,7 +7,7 @@ pipeline {
      stages {
        stage('Pullcode') {
          steps {
-             git 'https://github.com/up1/workshop-java-web-tdd.git'
+             git 'https://github.com/nuttea/workshop-java-web-tdd.git'
          }
        }
        stage('Testing') {
@@ -35,6 +35,7 @@ pipeline {
         stage('UI-Test') {
           steps { 
             sh "robot atdd/*.robot"
+            step([$class: 'RobotPublisher', disableArchiveOutput: false, enableCache: true, logFileName: 'log.html', onlyCritical: true, otherFiles: '', outputFileName: 'output.xml', outputPath: '', passThreshold: 95.0, reportFileName: 'report.html', unstableThreshold: 90.0])
           }
         }
       }

@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "8fe58ff9-cadf-4071-bfdb-2ea9690572d6",
+		"name": "API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "jsonplaceholer users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "391cc475-56e4-4003-86be-6379fd1aabae",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 900ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(900);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
