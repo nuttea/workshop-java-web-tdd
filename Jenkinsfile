@@ -22,6 +22,17 @@ pipeline {
              cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/target/site/cobertura/coverage.xml', failUnhealthy: false, failUnstable: false
           }
         }
+        stage('SonarQube analysis') {
+          withSonarQubeEnv('My SonarQube Server') {
+            // requires SonarQube Scanner for Maven 3.2+
+            sh 'mvn sonar:sonar'
+          }
+        }
+        stage('UI-Test') {
+          steps { 
+            sh "robot *.robot"
+          }
+        }
       }
       post {
         always {
