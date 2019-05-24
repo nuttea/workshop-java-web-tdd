@@ -32,7 +32,7 @@ pipeline {
       }
     }
     stage('UI Test') {
-      steps {
+      
         parallel Chrome: { 
           stage('Chrome') {
             steps {
@@ -49,7 +49,7 @@ pipeline {
             }
           }
         }
-      }
+      
     }
   }
   post {
